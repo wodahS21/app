@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const MyApp());
 
@@ -37,7 +41,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text("Prueba AppBar"),
           actions: [
             Icon(
-              Icons.join_right_outlined,
+              Icons.admin_panel_settings_rounded,
               color: Colors.deepPurpleAccent.shade400,
             )
           ],
@@ -63,17 +67,21 @@ class _MyAppState extends State<MyApp> {
                       style: TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.white,
-                          fontSize: 22)),
+                          fontSize: 22),
+                          ),
                   Image.asset('assets/mago.jpeg'),
                   const SizedBox(height: 30),
                   
-                  const SizedBox(height: 32),
-                  const Text('Partela Magazo',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  ),
+                  const Row(
+  children: <Widget>[
+    Expanded(
+      child: Text('Ya partela magazo', textAlign: TextAlign.center),
+    ),
+    Expanded(
+      child: Text('Test', textAlign: TextAlign.center),
+    ),
+  ],
+),
                    const SizedBox(height: 4),
                   const Text('(El profe nos dio la documentacion de flutter)',
                   style: TextStyle(
@@ -99,6 +107,7 @@ class _MyAppState extends State<MyApp> {
                     CircleAvatar(
                       radius: 35,
                       child: IconButton(
+                        
                         icon: Icon(
                           playing ? Icons.pause: Icons.play_arrow,
                         ),
@@ -107,12 +116,23 @@ class _MyAppState extends State<MyApp> {
   if (playing) {
     await audioPlayer.pause();
   } else {
+    await audioPlayer.play(AssetSource('/WITHOUT ME.mp3'));
  
-    await audioPlayer.play(UrlSource('https://www.youtube.com/watch?v=XiV7hwfLXGE'));
+    //await audioPlayer.play(UrlSource('https://www.youtube.com/watch?v=XiV7hwfLXGE'));
   }
 }
                       ),
                     ),
+                    ElevatedButton(
+                      onPressed: (){
+                      if(Platform.isAndroid){
+                        SystemNavigator.pop();
+                      }else{
+                        exit(0);
+                      }  
+                      },
+                     child: Text('Exit'),
+                     ),
                 ],
               ),
             ],
