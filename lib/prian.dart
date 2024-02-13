@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
@@ -44,16 +46,28 @@ class _PrimariaState extends State<Primaria> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade600,
+      backgroundColor: const Color.fromRGBO(33, 31, 219, 86),
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.blueGrey.shade900,
+        foregroundColor: Color.fromARGB(248, 253, 216, 4),
+        backgroundColor: const Color.fromRGBO(62, 61, 156, 61),
         title: const Text("Prueba AppBar"),
         actions: [
+          IconButton(
+              onPressed: () {
+                if (Platform.isAndroid) {
+                  SystemNavigator.pop();
+                } else {
+                  exit(0);
+                }
+              },
+              icon: const Icon(Icons.exit_to_app),
+              color: Colors.lightBlueAccent.shade400),
+          const SizedBox(width: 20),
           Icon(
-            Icons.admin_panel_settings_rounded,
-            color: Colors.deepPurpleAccent.shade400,
-          )
+            Icons.sms,
+            color: Colors.lightBlueAccent.shade400,
+          ),
+          const SizedBox(width: 20),
         ],
       ),
       body: Container(
@@ -84,18 +98,26 @@ class _PrimariaState extends State<Primaria> {
                 const SizedBox(height: 30),
                 const Row(
                   children: <Widget>[
+                    SizedBox(width: 40),
                     Expanded(
                       child: Text(
                         'Ya partela magazo',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
-                            color: Colors.white,
+                            color: Colors.amber,
                             fontSize: 22),
                       ),
                     ),
                     Expanded(
-                      child: Text('Test', textAlign: TextAlign.center),
+                      child: Text(
+                        'Segundo Texto',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.amber,
+                            fontSize: 22),
+                      ),
                     ),
                   ],
                 ),
@@ -104,52 +126,43 @@ class _PrimariaState extends State<Primaria> {
                   '(El profe nos dio la documentacion de flutter)',
                   style: TextStyle(
                     fontSize: 15,
+                    color: Colors.redAccent,
                   ),
                 ),
-                Slider(
-                  min: 0,
-                  max: dur.inSeconds.toDouble(),
-                  value: pos.inSeconds.toDouble(),
-                  onChanged: (value) async {},
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(formatTime(pos)),
-                      Text(formatTime(dur - pos)),
-                    ],
+                Row(children: [
+                  const SizedBox(width: 160),
+                  CircleAvatar(
+                    radius: 35,
+                    child: IconButton(
+                        icon: Icon(
+                          playing ? Icons.pause : Icons.play_arrow,
+                        ),
+                        iconSize: 50,
+                        onPressed: () async {
+                          if (playing == true) {
+                            await stopm('ME.mp3');
+                          } else if (playing == false) {
+                            await playm('ME.mp3');
+                            //await audioPlayer.play(UrlSource('https://www.youtube.com/watch?v=XiV7hwfLXGE'));
+                          }
+                        }),
                   ),
-                ),
-                CircleAvatar(
-                  radius: 35,
-                  child: IconButton(
-                      icon: Icon(
-                        playing ? Icons.pause : Icons.play_arrow,
-                      ),
-                      iconSize: 50,
-                      onPressed: () async {
-                        if (playing == true) {
-                          await stopm('ME.mp3');
-                        } else if (playing == false) {
-                          await playm('ME.mp3');
-                          //await audioPlayer.play(UrlSource('https://www.youtube.com/watch?v=XiV7hwfLXGE'));
-                        }
-                      }),
-                ),
+                ]),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'secundaria');
-                    // if (Platform.isAndroid) {
-                    //   SystemNavigator.pop();
-                    // } else {
-                    //   exit(0);
-                    // }
-                  },
-                  child: Text('GridView'),
-                ),
+                Row(children: [
+                  const SizedBox(width: 140),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'secundaria');
+                      // if (Platform.isAndroid) {
+                      //   SystemNavigator.pop();
+                      // } else {
+                      //   exit(0);
+                      // }
+                    },
+                    child: Text('GridView'),
+                  ),
+                ]),
               ],
             ),
           ],
