@@ -16,6 +16,7 @@ class _PrimariaState extends State<Primaria> {
 
   bool playing = false;
 
+  @override
   void initState() {
     super.initState();
 
@@ -63,10 +64,17 @@ class _PrimariaState extends State<Primaria> {
               icon: const Icon(Icons.exit_to_app),
               color: Colors.lightBlueAccent.shade400),
           const SizedBox(width: 20),
-          Icon(
-            Icons.sms,
-            color: Colors.lightBlueAccent.shade400,
-          ),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'clase');
+                // if (Platform.isAndroid) {
+                //   SystemNavigator.pop();
+                // } else {
+                //   exit(0);
+                // }
+              },
+              icon: const Icon(Icons.access_time),
+              color: Colors.lightBlueAccent.shade400),
           const SizedBox(width: 20),
         ],
       ),
@@ -160,7 +168,7 @@ class _PrimariaState extends State<Primaria> {
                       //   exit(0);
                       // }
                     },
-                    child: Text('GridView'),
+                    child: const Text('GridView'),
                   ),
                 ]),
               ],
@@ -171,16 +179,16 @@ class _PrimariaState extends State<Primaria> {
     );
   }
 
-  String formatTime(Duration dur) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = twoDigits(dur.inHours);
-    final minutes = twoDigits(dur.inMinutes);
-    final seconds = twoDigits(dur.inSeconds);
+  // String formatTime(Duration dur) {
+  //   String twoDigits(int n) => n.toString().padLeft(2, '0');
+  //   final hours = twoDigits(dur.inHours);
+  //   final minutes = twoDigits(dur.inMinutes);
+  //   final seconds = twoDigits(dur.inSeconds);
 
-    return [
-      if (dur.inHours > 0) hours,
-      minutes,
-      seconds,
-    ].join(':');
-  }
+  //   return [
+  //     if (dur.inHours > 0) hours,
+  //     minutes,
+  //     seconds,
+  //   ].join(':');
+  // }
 }

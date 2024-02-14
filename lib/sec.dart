@@ -12,10 +12,17 @@ class sec extends StatelessWidget {
         backgroundColor: Colors.blueGrey.shade900,
         title: const Text("Prueba AppBar"),
         actions: [
-          Icon(
-            Icons.admin_panel_settings_rounded,
-            color: Colors.deepPurpleAccent.shade400,
-          )
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'prueba');
+                // if (Platform.isAndroid) {
+                //   SystemNavigator.pop();
+                // } else {
+                //   exit(0);
+                // }
+              },
+              icon: const Icon(Icons.admin_panel_settings_rounded),
+              color: Colors.lightBlueAccent.shade400),
         ],
       ),
       body: Center(
